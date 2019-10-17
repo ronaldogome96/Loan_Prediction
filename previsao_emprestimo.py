@@ -34,14 +34,14 @@ previsores = scaler.fit_transform(previsores)
 from sklearn.model_selection import train_test_split
 previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.20, random_state=0)
 
-#KNN
-from sklearn.neighbors import KNeighborsClassifier
-classificador = KNeighborsClassifier(n_neighbors=7, metric='minkowski', p=2)
+#Naive Bayes
+from sklearn.naive_bayes import GaussianNB
+classificador = GaussianNB()
 classificador.fit(previsores_treinamento, classe_treinamento)
 previsoes = classificador.predict(previsores_teste)
 
 from sklearn.metrics import confusion_matrix , accuracy_score
-#Score de 0.7604
+#Score de 0.78125
 #Foi o melhor score, depois de varias configurações diferentes
 precisao = accuracy_score(classe_teste, previsoes)
 matriz = confusion_matrix(classe_teste, previsoes)
