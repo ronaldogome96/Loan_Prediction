@@ -22,8 +22,8 @@ previsores[:, 10] = labelencoder_previsores.fit_transform(previsores[:, 10])
 labelencoder_classe = LabelEncoder()
 classe = labelencoder_classe.fit_transform(classe)
 
-onehotencoder = OneHotEncoder(categorical_features = [0,1,2,3,4,10])
-previsores = onehotencoder.fit_transform(previsores).toarray()
+#onehotencoder = OneHotEncoder(categorical_features = [0,1,2,3,4,10])
+#previsores = onehotencoder.fit_transform(previsores).toarray()
 
 #Escalonamento
 from sklearn.preprocessing import StandardScaler
@@ -34,14 +34,13 @@ previsores = scaler.fit_transform(previsores)
 from sklearn.model_selection import train_test_split
 previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.20, random_state=0)
 
-#SMV
-from sklearn.svm import SVC
-classificador = SVC(kernel = 'linear', random_state=0, C=0.5)
+#Random Forest
+from sklearn.ensemble import RandomForestClassifier
+classificador = RandomForestClassifier(n_estimators = 40, criterion='entropy', random_state=0)
 classificador.fit(previsores_treinamento, classe_treinamento)
 previsoes = classificador.predict(previsores_teste)
 
-
 from sklearn.metrics import confusion_matrix , accuracy_score
-#Score de 0.778
+#Score de 0.7604
 #Foi o melhor score, depois de varias configurações diferentes
 precisao = accuracy_score(classe_teste, previsoes)
