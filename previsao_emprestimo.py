@@ -45,4 +45,3 @@ from sklearn.metrics import confusion_matrix , accuracy_score
 #Score de 0.778
 #Foi o melhor score, depois de varias configurações diferentes
 precisao = accuracy_score(classe_teste, previsoes)
-matriz = confusion_matrix(classe_teste, previsoes)
