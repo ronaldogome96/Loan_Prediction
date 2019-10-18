@@ -22,8 +22,8 @@ previsores[:, 10] = labelencoder_previsores.fit_transform(previsores[:, 10])
 labelencoder_classe = LabelEncoder()
 classe = labelencoder_classe.fit_transform(classe)
 
-#onehotencoder = OneHotEncoder(categorical_features = [0,1,2,3,4,10])
-#previsores = onehotencoder.fit_transform(previsores).toarray()
+onehotencoder = OneHotEncoder(categorical_features = [0,1,2,3,4,10])
+previsores = onehotencoder.fit_transform(previsores).toarray()
 
 #Escalonamento
 from sklearn.preprocessing import StandardScaler
@@ -32,16 +32,16 @@ previsores = scaler.fit_transform(previsores)
 
 #Divide a base de dados
 from sklearn.model_selection import train_test_split
-previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.20, random_state=0)
+previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.15, random_state=0)
 
-#Naive Bayes
-from sklearn.naive_bayes import GaussianNB
-classificador = GaussianNB()
+#Regressao Logistica
+from sklearn.linear_model import LogisticRegression
+classificador = LogisticRegression()
 classificador.fit(previsores_treinamento, classe_treinamento)
 previsoes = classificador.predict(previsores_teste)
 
 from sklearn.metrics import confusion_matrix , accuracy_score
-#Score de 0.78125
+#Score de 0.7638
 #Foi o melhor score, depois de varias configurações diferentes
 precisao = accuracy_score(classe_teste, previsoes)
 matriz = confusion_matrix(classe_teste, previsoes)
