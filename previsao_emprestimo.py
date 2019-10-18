@@ -34,14 +34,20 @@ previsores = scaler.fit_transform(previsores)
 from sklearn.model_selection import train_test_split
 previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.15, random_state=0)
 
-#Regressao Logistica
-from sklearn.linear_model import LogisticRegression
-classificador = LogisticRegression()
+#Rede neural
+from sklearn.neural_network import MLPClassifier
+classificador = MLPClassifier(verbose = True,
+                              max_iter=1000,
+                              tol = 0.0000010,
+                              solver = 'adam',
+                              hidden_layer_sizes=(100),
+                              activation='tanh')
 classificador.fit(previsores_treinamento, classe_treinamento)
 previsoes = classificador.predict(previsores_teste)
 
+
 from sklearn.metrics import confusion_matrix , accuracy_score
-#Score de 0.7638
+#Score de 0.7991
 #Foi o melhor score, depois de varias configurações diferentes
 precisao = accuracy_score(classe_teste, previsoes)
 matriz = confusion_matrix(classe_teste, previsoes)
